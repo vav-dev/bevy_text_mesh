@@ -1,3 +1,4 @@
+use bevy::render::render_asset::RenderAssetUsages;
 use bevy::render::render_resource::PrimitiveTopology;
 use bevy::{prelude::*, render::mesh::Indices};
 
@@ -67,7 +68,10 @@ pub(crate) fn text_mesh(
                 // TODO: handle color updates
             }
             None => {
-                let mut mesh = Mesh::new(PrimitiveTopology::TriangleList);
+                let mut mesh = Mesh::new(
+                    PrimitiveTopology::TriangleList,
+                    RenderAssetUsages::default(),
+                );
 
                 apply_mesh(ttf2_mesh, &mut mesh);
 
@@ -141,5 +145,5 @@ fn apply_mesh(mesh_data: MeshData, mesh: &mut Mesh) {
     mesh.insert_attribute(Mesh::ATTRIBUTE_POSITION, mesh_data.vertices);
     mesh.insert_attribute(Mesh::ATTRIBUTE_NORMAL, mesh_data.normals);
     mesh.insert_attribute(Mesh::ATTRIBUTE_UV_0, mesh_data.uvs);
-    mesh.set_indices(Some(Indices::U32(mesh_data.indices)));
+    mesh.insert_indices(Indices::U32(mesh_data.indices));
 }

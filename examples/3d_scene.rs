@@ -109,13 +109,17 @@ fn setup(
     mut materials: ResMut<Assets<StandardMaterial>>,
 ) {
     commands.spawn(PbrBundle {
-        mesh: meshes.add(Mesh::from(shape::Plane::from_size(5.0))),
-        material: materials.add(Color::rgb(0.3, 0.5, 0.3).into()),
+        mesh: meshes.add(Mesh::from(bevy::math::primitives::Plane3d::new(Vec3::new(
+            0., 1., 0.,
+        )))),
+        material: materials.add(Color::rgb(0.3, 0.5, 0.3)),
         ..Default::default()
     });
     commands.spawn(PbrBundle {
-        mesh: meshes.add(Mesh::from(shape::Cube { size: 1.0 })),
-        material: materials.add(Color::rgb(0.8, 0.7, 0.6).into()),
+        mesh: meshes.add(Mesh::from(bevy::math::primitives::Cuboid {
+            half_size: Vec3::splat(0.1),
+        })),
+        material: materials.add(Color::rgb(0.8, 0.7, 0.6)),
         transform: Transform::from_xyz(0.0, 0.5, 0.0),
         ..Default::default()
     });
